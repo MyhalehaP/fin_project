@@ -42,12 +42,23 @@ export default class Login extends Component {
 
       <View style = {styles.container}>
             <View style={styles.inputForm}>
-              <Text style={styles.headerText}>Username</Text>
-                <TextInput style={styles.inputStyle} underlineColorAndroid={'black'} width={250}/>
 
-                <Text style={styles.headerText}>Password</Text>
-                  <TextInput style={styles.inputStyle} underlineColorAndroid={'black'} width={250}/>
+              <Text style={styles.headerText}>Username</Text>
+              <TextInput style={styles.inputStyle} underlineColorAndroid={'black'} width={250}/>
+
+              <Text style={styles.headerText}>Password</Text>
+              <TextInput style={styles.inputStyle} underlineColorAndroid={'black'} width={250}/>
+
+              <TouchableOpacity style={styles.btn}>
+                 <Text style={styles.loginText}>LOGIN</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.reg}>
+                 <Text style={styles.regText}>Sign Up</Text>
+              </TouchableOpacity>
             </View>
+
+
           </View>
 
     );
@@ -58,7 +69,8 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
   container:{
-    flex: 1
+    flex: 1,
+
   },
 
   inputForm:{
@@ -74,8 +86,37 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       color: "#3498DB",
       paddingBottom: 10,
+      justifyContent: "center",
 
-  }
+  },
+  loginText:{
+        color:"white",
+        textAlign:"center",
+        fontWeight:"bold",
+  },
+
+  regText:{
+      fontWeight:"bold",
+      color:"#3498DB",
+  },
+
+  btn:{
+    width:150,
+    height: 50,
+    position:"absolute",
+    bottom:200,
+
+    backgroundColor:"#3498DB",
+    justifyContent: "center",
+
+  },
+  reg:{
+     position:'absolute',
+     bottom:170,
+
+    textAlign:"center",
+    justifyContent:"center"
+  },
 
 
 });
