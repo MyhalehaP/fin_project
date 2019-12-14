@@ -16,8 +16,12 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default class Login extends Component {
+import Signup from './Signup';
+
+class Login extends Component {
 
   constructor(){
     super()
@@ -53,7 +57,7 @@ export default class Login extends Component {
                  <Text style={styles.loginText}>LOGIN</Text>
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.reg}>
+              <TouchableOpacity onPress = {() => this.props.navigation.navigate('Signup')} style={styles.reg}>
                  <Text style={styles.regText}>Sign Up</Text>
               </TouchableOpacity>
             </View>
@@ -66,6 +70,27 @@ export default class Login extends Component {
 };
 
 
+
+const RootStack = createStackNavigator({
+
+    Login: Login,
+    Signup: Signup,
+    },
+
+    {
+    initialRouteName: 'Login',
+
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+
+
+    }
+
+    );
+
+const AppContainer = createAppContainer(RootStack);
 
 const styles = StyleSheet.create({
   container:{
@@ -120,3 +145,9 @@ const styles = StyleSheet.create({
 
 
 });
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
