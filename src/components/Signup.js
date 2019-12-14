@@ -106,17 +106,14 @@ const styles = StyleSheet.create({
   btn:{
     width:150,
     height: 50,
-    position:"absolute",
-    bottom:200,
+
 
     backgroundColor:"#3498DB",
     justifyContent: "center",
 
   },
   reg:{
-     position:'absolute',
-     bottom:170,
-
+    paddingTop:15,
     textAlign:"center",
     justifyContent:"center"
   },
