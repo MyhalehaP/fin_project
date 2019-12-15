@@ -18,6 +18,7 @@ import {
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import Firebase from './Firebase'
 
 export default class Signup extends Component {
 
@@ -30,12 +31,41 @@ export default class Signup extends Component {
 
   }
 
-  buttonPressed(text){
+  getUsername(text){
       //console.log(text);
 
       this.setState({
-            resultText: this.state.resultText+text
+            username: text
           })
+  }
+
+
+  getPassword(text){
+      //console.log(text);
+
+      this.setState({
+            password: text
+          })
+  }
+
+
+
+  async signup_start(): Promise<void> {
+
+      console.log(this.state.username, this.state.password);
+
+      var username = this.state.username
+      var password = this.state.password
+
+      try {
+          await Firebase.auth.createUserWithEmailAndPassword(username, password);
+          alert("OK.")
+      } catch (e) {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert("Try again.");
+      }
+
   }
 
   render(){
@@ -43,15 +73,16 @@ export default class Signup extends Component {
     return (
 
       <View style = {styles.container}>
+
             <View style={styles.inputForm}>
 
               <Text style={styles.headerText}>Username</Text>
-              <TextInput style={styles.inputStyle} underlineColorAndroid={'black'} width={250}/>
+              <TextInput style={styles.inputStyle} onChangeText = {text => this.getUsername(text)} underlineColorAndroid={'black'} width={250}/>
 
               <Text style={styles.headerText}>Password</Text>
-              <TextInput style={styles.inputStyle} underlineColorAndroid={'black'} width={250}/>
+              <TextInput style={styles.inputStyle} onChangeText = {text => this.getPassword(text)} secureTextEntry={true} underlineColorAndroid={'black'} width={250}/>
 
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} onPress = {() => this.signup_start()}>
                  <Text style={styles.loginText}>SIGN UP</Text>
               </TouchableOpacity>
 
