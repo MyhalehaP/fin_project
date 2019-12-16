@@ -20,6 +20,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import Signup from './Signup';
+import Dashboard from './Dashboard';
 import Firebase from './Firebase';
 
 class Login extends Component {
@@ -55,12 +56,13 @@ class Login extends Component {
   async login_check(): Promise<void>{
 
       console.log(this.state.username,this.state.password);
-
+      const that = this;
       var username = this.state.username
       var password = this.state.password
 
       try {
           await Firebase.auth.signInWithEmailAndPassword(username, password);
+          that.props.navigation.navigate('Dashboard')
           alert("Logged in");
       } catch (e) {
           var errorCode = error.code;
@@ -74,15 +76,18 @@ class Login extends Component {
 
 
   render(){
+      const that = this
+
       if(this.state.initialized == 0){
           Firebase.init()
           Firebase.auth.onAuthStateChanged(function(user) {
       if (user) {
         // User is signed in.
-        alert("Welcome back")
-      } else {
-        // No user is signed in.
-        alert("Welcome!")
+        var user = Firebase.auth.currentUser;
+        var email = user.email;
+
+        that.props.navigation.navigate('Dashboard')
+        alert("Welcome back, " + email )
       }
     });
           this.setState({
@@ -123,6 +128,7 @@ const RootStack = createStackNavigator({
 
     Login: Login,
     Signup: Signup,
+    Dashboard: Dashboard,
     },
 
     {
