@@ -21,6 +21,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Signup from './Signup';
 import Dashboard from './Dashboard';
+import Action from './Action'
+import History from './History'
 import Firebase from './Firebase';
 
 class Login extends Component {
@@ -87,7 +89,7 @@ class Login extends Component {
         var email = user.email;
 
         that.props.navigation.navigate('Dashboard')
-        alert("Welcome back, " + email )
+        alert("Welcome, " + email )
       }
     });
           this.setState({
@@ -129,6 +131,8 @@ const RootStack = createStackNavigator({
     Login: Login,
     Signup: Signup,
     Dashboard: Dashboard,
+    History: History,
+    Action: Action,
     },
 
     {

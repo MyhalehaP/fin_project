@@ -51,7 +51,7 @@ export default class Signup extends Component {
 
 
   async signup_start(): Promise<void> {
-
+      const that = this;
       console.log(this.state.username, this.state.password);
 
       var username = this.state.username
@@ -59,7 +59,8 @@ export default class Signup extends Component {
 
       try {
           await Firebase.auth.createUserWithEmailAndPassword(username, password);
-          alert("OK.")
+          that.props.navigation.navigate('Dashboard')
+          alert("Welcome, " + email )
       } catch (e) {
           var errorCode = error.code;
           var errorMessage = error.message;

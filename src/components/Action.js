@@ -20,7 +20,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Firebase from './Firebase'
 
-export default class Dashboard extends Component {
+export default class Action extends Component {
 
   constructor(){
     super()
@@ -38,31 +38,31 @@ export default class Dashboard extends Component {
     return (
 
       <View style = {styles.container}>
-      <Text style={styles.dashboardHeader}>Dashboard</Text>
+      <Text style={styles.dashboardHeader}>Action</Text>
 
 
       <View style = {styles.container2}>
-            <View style={styles.balance}>
+          <TouchableOpacity>
+             <Text style={styles.btnMenu}>Income</Text>
+          </TouchableOpacity>
 
-            </View>
 
-
-            <View style={styles.diagram}>
-
-            </View>
+          <TouchableOpacity>
+             <Text style={styles.btnMenu}>Outcome</Text>
+          </TouchableOpacity>
 
     </View>
 
         <View style = {styles.bottomNav}>
-            <TouchableOpacity  onPress = {() => this.props.navigation.navigate('Action')}>
+            <TouchableOpacity>
                <Text style={styles.btn}>Action</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress = {() => this.props.navigation.navigate('Dashboard')}>
                <Text style={styles.btn}>Dashboard</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity  onPress = {() => this.props.navigation.navigate('History')}>
+            <TouchableOpacity onPress = {() => this.props.navigation.navigate('History')} >
                <Text style={styles.btn}>History</Text>
             </TouchableOpacity>
 
@@ -86,8 +86,21 @@ const styles = StyleSheet.create({
 
   },
   container2:{
-    flex: 0.7,
-    justifyContent:"center",
+      flex:0.1,
+      backgroundColor:"#3498DB",
+      flexDirection: "row",
+      alignContent: 'space-around',
+      justifyContent:"center",
+      alignSelf:"center",
+      position: "absolute",
+      top: 150,
+
+  },
+
+  btnMenu:{
+      color:"white",
+      fontSize:24,
+      margin:10,
 
   },
 
