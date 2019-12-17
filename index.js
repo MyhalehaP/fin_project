@@ -9,4 +9,4 @@
  import Action from './src/components/Action';
  import {name as appName} from './app.json';
 
- AppRegistry.registerComponent(appName, () => Login);
+ AppRegistry.registerComponent(appName, () => Action);
