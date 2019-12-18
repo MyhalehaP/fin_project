@@ -91,6 +91,7 @@ export default class Action extends Component {
                 <Picker.Item label="Sport" value="sport" />
                 <Picker.Item label="Entertainment" value="entertainment" />
                 <Picker.Item label="Transport" value="transport" />
+                <Picker.Item label="Taxes" value="taxes" />
                 <Picker.Item label="Others" value="others" />
 
               </Picker>
@@ -124,31 +125,6 @@ export default class Action extends Component {
       var current_user = firebase.auth().currentUser.uid;
       const docRef = firestore.collection("users").doc(current_user);
 
-
-      // let getDoc = docRef.get()
-      //         .then(doc => {
-      //
-      //             this.setState({
-      //                 balance : doc.data().balance,
-      //                 sum_food: doc.data().sum_food,
-      //                 sum_cloth: doc.data().sum_cloth,
-      //                 sum_sport: doc.data().sum_sport,
-      //                 sum_entertainment: doc.data().sum_entertainment,
-      //                 sum_transport: doc.data().sum_transport,
-      //                 sum_taxes: doc.data().sum_taxes,
-      //                 sum_others_in: doc.data().sum_others_in,
-      //
-      //                 sum_salary: doc.data().sum_salary,
-      //                 sum_gift: doc.data().sum_gift,
-      //                 sum_passive: doc.data().sum_passive,
-      //                 sum_others_out: doc.data().sum_others_out,
-      //
-      //                 total_income: doc.data().total_income,
-      //                 total_outcome: doc.data().total_outcome,
-      //              });
-      //
-      //             });
-
                   var d = new Date()
                   var time = Number(d.getTime())
                   var val = Number(this.state.value)
@@ -170,10 +146,6 @@ export default class Action extends Component {
             const inRef = docRef.collection("income").doc(Math.random().toString(36).substr(2, 9))
             const cat = this.state.category
             console.log(cat);
-            //     sum_salary: 0,
-            //     sum_gift: 0,
-            //     sum_passive: 0,
-            //     sum_others: 0,
 
 
             switch (cat) {
@@ -247,28 +219,6 @@ export default class Action extends Component {
 
             }
 
-
-            // inRef.set({
-            //     //balance: this.state.,
-            //     total_income: 0,
-            //     total_outcome: 0,
-            //
-            //     sum_salary: 0,
-            //     sum_gift: 0,
-            //     sum_passive: 0,
-            //     sum_others: 0,
-            //
-            //     sum_food: 0,
-            //     sum_cloth: 0,
-            //     sum_sport: 0,
-            //     sum_entertainment: 0,
-            //     sum_transport: 0,
-            //     sum_taxes: 0,
-            //     sum_others: 0,
-            //     }).then(function(){
-            //           console.log(" OK \n");
-            //         });
-
         }else if(this.state.listOutcome){
 
             firestore.runTransaction(async transaction => {
@@ -286,13 +236,6 @@ export default class Action extends Component {
             const outRef = docRef.collection("outcome").doc(Math.random().toString(36).substr(2, 9))
             const cat = this.state.category
             console.log(cat);
-            //     sum_food: 0,
-            //     sum_cloth: 0,
-            //     sum_sport: 0,
-            //     sum_entertainment: 0,
-            //     sum_transport: 0,
-            //     sum_taxes: 0,
-            //     sum_others: 0,
 
 
             switch (cat) {

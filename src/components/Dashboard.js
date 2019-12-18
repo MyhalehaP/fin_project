@@ -27,41 +27,53 @@ export default class Dashboard extends Component {
     super()
     this.state={
         balance: 'Loading...',
-        food: 0,
-        cloth: 0,
-        sport: 0,
-        entertainment: 0,
-        transport: 0,
-        taxes: 0,
-        others: 0,
+        food: "",
+        cloth: "",
+        sport: "",
+        entertainment: "",
+        transport: "",
+        taxes: "",
+        others: "",
 
     }
 
   }
 
-  UNSAFE_componentWillMount(){
-      var firestore = firebase.firestore();
-      var current_user = firebase.auth().currentUser.uid;
+  componentDidMount(){
 
-      const docRef = firestore.collection("users").doc(current_user);
+      const didFocusSubscription = this.props.navigation.addListener(
+        'didFocus',
+        payload => {
+            var firestore = firebase.firestore();
+            var current_user = firebase.auth().currentUser.uid;
 
-      let getDoc = docRef.get()
-              .then(doc => {
+            const docRef = firestore.collection("users").doc(current_user);
 
-                  this.setState({
-                      balance : doc.data().balance,
-                      food: doc.data().sum_food,
-                      cloth: doc.data().sum_cloth,
-                      sport: doc.data().sum_sport,
-                      entertainment: doc.data().sum_entertainment,
-                      transport: doc.data().sum_transport,
-                      taxes: doc.data().sum_taxes,
-                      others: doc.data().sum_others_out,
-                   });
+            let getDoc = docRef.get()
+                    .then(doc => {
 
-                  });
+                        this.setState({
+                            balance : doc.data().balance,
+                            food: doc.data().sum_food,
+                            cloth: doc.data().sum_cloth,
+                            sport: doc.data().sum_sport,
+                            entertainment: doc.data().sum_entertainment,
+                            transport: doc.data().sum_transport,
+                            taxes: doc.data().sum_taxes,
+                            others: doc.data().sum_others_out,
+                         });
+
+                        });
+        }
+      );
 
    }
+
+
+
+   componentWillUnmount() {
+   didFocusSubscription.remove();
+}
 
   render(){
 
