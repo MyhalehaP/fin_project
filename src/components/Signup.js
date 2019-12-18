@@ -81,6 +81,7 @@ export default class Signup extends Component {
               sum_sport: 0,
               sum_entertainment: 0,
               sum_transport: 0,
+              sum_taxes: 0,
               sum_others: 0,
               }).then(function(){
                     that.props.navigation.navigate('Dashboard')

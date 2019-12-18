@@ -27,6 +27,13 @@ export default class Dashboard extends Component {
     super()
     this.state={
         balance: 'Loading...',
+        food: 0,
+        cloth: 0,
+        sport: 0,
+        entertainment: 0,
+        transport: 0,
+        taxes: 0,
+        others: 0,
 
     }
 
@@ -42,8 +49,14 @@ export default class Dashboard extends Component {
               .then(doc => {
 
                   this.setState({
-                      balance : doc.data().balance
-
+                      balance : doc.data().balance,
+                      food: doc.data().sum_food,
+                      cloth: doc.data().sum_cloth,
+                      sport: doc.data().sum_sport,
+                      entertainment: doc.data().sum_entertainment,
+                      transport: doc.data().sum_transport,
+                      taxes: doc.data().sum_taxes,
+                      others: doc.data().sum_others,
                    });
 
                   });
@@ -64,8 +77,14 @@ export default class Dashboard extends Component {
             </View>
 
 
-            <View style={styles.diagram}>
-
+            <View style={styles.expenses}>
+                <Text style ={styles.textExpenses}>Food: {this.state.food}</Text>
+                <Text style ={styles.textExpenses}>Cloth: {this.state.cloth}</Text>
+                <Text style ={styles.textExpenses}>Sport: {this.state.sport}</Text>
+                <Text style ={styles.textExpenses}>Entertainment: {this.state.entertainment}</Text>
+                <Text style ={styles.textExpenses}>Transport: {this.state.transport}</Text>
+                <Text style ={styles.textExpenses}>Taxes: {this.state.taxes}</Text>
+                <Text style ={styles.textExpenses}>Others: {this.state.others}</Text>
             </View>
 
     </View>
@@ -134,13 +153,20 @@ const styles = StyleSheet.create({
 
   },
 
-  diagram:{
+  textExpenses:{
+      color:"white",
+      fontSize: 18,
+      textAlign:"center",
+
+  },
+
+  expenses:{
       flex:1,
       marginTop:10,
       backgroundColor:"#3498DB",
       borderWidth:5,
       borderColor:"#AED6F1",
-
+      justifyContent:"center",
 
 
   },
