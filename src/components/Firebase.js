@@ -6,15 +6,6 @@ var firebaseConfig = {
     
   };
 
+firebase.initializeApp(firebaseConfig);
 
-export default class Firebase {
-
-    static auth;
-
-    static init(){
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        Firebase.auth = firebase.auth();
-    }
-
-}
+export default firebase

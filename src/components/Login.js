@@ -23,7 +23,7 @@ import Signup from './Signup';
 import Dashboard from './Dashboard';
 import Action from './Action'
 import History from './History'
-import Firebase from './Firebase';
+import firebase from './Firebase';
 
 class Login extends Component {
 
@@ -33,14 +33,12 @@ class Login extends Component {
     this.state={
         username: "",
         password: "",
-        initialized: 0,
     }
 
   }
 
   getUsername(text){
       //console.log(text);
-
       this.setState({
             username: text
           })
@@ -49,7 +47,6 @@ class Login extends Component {
 
   getPassword(text){
       //console.log(text);
-
       this.setState({
             password: text
           })
@@ -63,7 +60,7 @@ class Login extends Component {
       var password = this.state.password
 
       try {
-          await Firebase.auth.signInWithEmailAndPassword(username, password);
+          await firebase.auth().signInWithEmailAndPassword(username, password);
           that.props.navigation.navigate('Dashboard')
           alert("Logged in");
       } catch (e) {
@@ -75,27 +72,25 @@ class Login extends Component {
 
   }
 
+  UNSAFE_componentWillMount() {
+      const that = this
+
+      firebase.auth().onAuthStateChanged(function(user) {
+
+          if (user) {
+            // User is signed in.
+            var user = firebase.auth().currentUser;
+            var email = user.email;
+
+            that.props.navigation.navigate('Dashboard')
+          }
+});
+       }
 
 
   render(){
-      const that = this
 
-      if(this.state.initialized == 0){
-          Firebase.init()
-          Firebase.auth.onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in.
-        var user = Firebase.auth.currentUser;
-        var email = user.email;
 
-        that.props.navigation.navigate('Dashboard')
-        alert("Welcome, " + email )
-      }
-    });
-          this.setState({
-              initialized: 1
-              })
-      }
     return (
 
       <View style = {styles.container}>

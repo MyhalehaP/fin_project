@@ -18,7 +18,8 @@ import {
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Firebase from './Firebase'
+import firebase from './Firebase'
+import 'firebase/firestore';
 
 export default class Signup extends Component {
 
@@ -33,7 +34,6 @@ export default class Signup extends Component {
 
   getUsername(text){
       //console.log(text);
-
       this.setState({
             username: text
           })
@@ -42,7 +42,6 @@ export default class Signup extends Component {
 
   getPassword(text){
       //console.log(text);
-
       this.setState({
             password: text
           })
@@ -52,18 +51,46 @@ export default class Signup extends Component {
 
   async signup_start(): Promise<void> {
       const that = this;
-      console.log(this.state.username, this.state.password);
+     // console.log(this.state.username, this.state.password);
+
 
       var username = this.state.username
       var password = this.state.password
 
       try {
-          await Firebase.auth.createUserWithEmailAndPassword(username, password);
-          that.props.navigation.navigate('Dashboard')
-          alert("Welcome, " + email )
+
+          await firebase.auth().createUserWithEmailAndPassword(username, password);
+
+          var firestore = firebase.firestore();
+          var current_user = firebase.auth().currentUser.uid;
+
+          const docRef = firestore.collection("users").doc(current_user);
+
+          docRef.set({
+              balance: 0,
+              total_income: 0,
+              total_outcome: 0,
+
+              sum_salary: 0,
+              sum_gift: 0,
+              sum_passive: 0,
+              sum_others: 0,
+
+              sum_food: 0,
+              sum_cloth: 0,
+              sum_sport: 0,
+              sum_entertainment: 0,
+              sum_transport: 0,
+              sum_others: 0,
+              }).then(function(){
+                    that.props.navigation.navigate('Dashboard')
+                    console.log(" OK \n");
+                  });
+
       } catch (e) {
-          var errorCode = error.code;
-          var errorMessage = error.message;
+          var errorCode = e.code;
+          var errorMessage = e.message;
+          console.log(errorMessage);
           alert("Try again.");
       }
 

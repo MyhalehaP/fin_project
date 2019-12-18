@@ -18,20 +18,37 @@ import {
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Firebase from './Firebase'
+import firebase from './Firebase'
+import 'firebase/firestore';
 
 export default class Dashboard extends Component {
 
   constructor(){
     super()
-    // this.state={
-    //     username: "",
-    //     password: "",
-    // }
+    this.state={
+        balance: 'Loading...',
+
+    }
 
   }
 
+  UNSAFE_componentWillMount(){
+      var firestore = firebase.firestore();
+      var current_user = firebase.auth().currentUser.uid;
 
+      const docRef = firestore.collection("users").doc(current_user);
+
+      let getDoc = docRef.get()
+              .then(doc => {
+
+                  this.setState({
+                      balance : doc.data().balance
+
+                   });
+
+                  });
+
+   }
 
   render(){
 
@@ -43,7 +60,7 @@ export default class Dashboard extends Component {
 
       <View style = {styles.container2}>
             <View style={styles.balance}>
-
+                <Text style ={styles.textBalance}>{this.state.balance}</Text>
             </View>
 
 
@@ -106,6 +123,14 @@ const styles = StyleSheet.create({
       backgroundColor:"#3498DB",
       borderWidth:5,
       borderColor:"#AED6F1",
+      justifyContent:"center",
+
+  },
+
+  textBalance:{
+      color:"white",
+      fontSize: 36,
+      textAlign:"center",
 
   },
 

@@ -21,7 +21,8 @@ import {Dimensions } from "react-native";
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Firebase from './Firebase'
+import firebase from './Firebase'
+import 'firebase/firestore';
 
 export default class Action extends Component {
 
@@ -132,6 +133,11 @@ export default class Action extends Component {
   {this.renderIncomeList()}
   {this.renderOutcomeList()}
 
+
+  <TouchableOpacity style = {styles.submit}>
+     <Text style={styles.btn}>Submit</Text>
+  </TouchableOpacity>
+
         <View style = {styles.bottomNav}>
             <TouchableOpacity>
                <Text style={styles.btn}>Action</Text>
@@ -178,6 +184,17 @@ const styles = StyleSheet.create({
       top: 150,
 
     },
+
+    submit:{
+        backgroundColor:"#3498DB",
+        flex:0,
+        alignItems:"center",
+        alignSelf:"center",
+        position:"absolute",
+        top:screenHeight-150,
+
+    },
+
 
     dropList:{
         height: 25,

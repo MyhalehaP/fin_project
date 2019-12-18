@@ -18,7 +18,8 @@ import {
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import Firebase from './Firebase'
+import firebase from './Firebase'
+import 'firebase/firestore';
 
 
 export default class History extends Component {
