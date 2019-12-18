@@ -56,7 +56,7 @@ export default class Dashboard extends Component {
                       entertainment: doc.data().sum_entertainment,
                       transport: doc.data().sum_transport,
                       taxes: doc.data().sum_taxes,
-                      others: doc.data().sum_others,
+                      others: doc.data().sum_others_out,
                    });
 
                   });

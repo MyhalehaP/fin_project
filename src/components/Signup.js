@@ -74,7 +74,7 @@ export default class Signup extends Component {
               sum_salary: 0,
               sum_gift: 0,
               sum_passive: 0,
-              sum_others: 0,
+              sum_others_in: 0,
 
               sum_food: 0,
               sum_cloth: 0,
@@ -82,7 +82,7 @@ export default class Signup extends Component {
               sum_entertainment: 0,
               sum_transport: 0,
               sum_taxes: 0,
-              sum_others: 0,
+              sum_others_out: 0,
               }).then(function(){
                     that.props.navigation.navigate('Dashboard')
                     console.log(" OK \n");

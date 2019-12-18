@@ -14,25 +14,33 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-  Picker
+  Picker,
 } from 'react-native';
 
 import {Dimensions } from "react-native";
+
+
+console.disableYellowBox = true;
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import firebase from './Firebase'
 import 'firebase/firestore';
 
+
+
 export default class Action extends Component {
 
   constructor(){
     super()
     this.state={
+
         value: "",
         listIncome: false,
         listOutcome: false,
-        category:"",
+        category:"others",
+
+
     }
 
   }
@@ -59,7 +67,7 @@ export default class Action extends Component {
                 <Picker.Item label="Salary" value="salary" />
                 <Picker.Item label="Gift" value="gift" />
                 <Picker.Item label="Passive" value="passive" />
-                <Picker.Item label="Other" value="other" />
+                <Picker.Item label="Others" value="others" />
 
               </Picker>
               </View>
@@ -109,6 +117,312 @@ export default class Action extends Component {
 
   }
 
+
+  submitValue = () => {
+
+      var firestore = firebase.firestore();
+      var current_user = firebase.auth().currentUser.uid;
+      const docRef = firestore.collection("users").doc(current_user);
+
+
+      // let getDoc = docRef.get()
+      //         .then(doc => {
+      //
+      //             this.setState({
+      //                 balance : doc.data().balance,
+      //                 sum_food: doc.data().sum_food,
+      //                 sum_cloth: doc.data().sum_cloth,
+      //                 sum_sport: doc.data().sum_sport,
+      //                 sum_entertainment: doc.data().sum_entertainment,
+      //                 sum_transport: doc.data().sum_transport,
+      //                 sum_taxes: doc.data().sum_taxes,
+      //                 sum_others_in: doc.data().sum_others_in,
+      //
+      //                 sum_salary: doc.data().sum_salary,
+      //                 sum_gift: doc.data().sum_gift,
+      //                 sum_passive: doc.data().sum_passive,
+      //                 sum_others_out: doc.data().sum_others_out,
+      //
+      //                 total_income: doc.data().total_income,
+      //                 total_outcome: doc.data().total_outcome,
+      //              });
+      //
+      //             });
+
+                  var d = new Date()
+                  var time = Number(d.getTime())
+                  var val = Number(this.state.value)
+
+        if(this.state.listIncome){
+
+            firestore.runTransaction(async transaction => {
+            const doc = await transaction.get(docRef);
+
+            const newBalance = doc.data().balance + val;
+            const newTotalIncome = doc.data().total_income + val;
+            transaction.update(docRef, {
+              balance: newBalance,
+              total_income: newTotalIncome,
+            });
+
+          });
+
+            const inRef = docRef.collection("income").doc(Math.random().toString(36).substr(2, 9))
+            const cat = this.state.category
+            console.log(cat);
+            //     sum_salary: 0,
+            //     sum_gift: 0,
+            //     sum_passive: 0,
+            //     sum_others: 0,
+
+
+            switch (cat) {
+                case "salary":
+
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newSalary = doc.data().sum_salary + val;
+                    transaction.update(docRef, {
+                      sum_salary: newSalary,
+                    });
+                  });
+                    inRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+                case "gift":
+
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newGift = doc.data().sum_gift + val;
+                    transaction.update(docRef, {
+                      sum_gift: newGift,
+                    });
+                  });
+                    inRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+                case "passive":
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newPassive = doc.data().sum_passive + val;
+                    transaction.update(docRef, {
+                      sum_passive: newPassive,
+                    });
+                  });
+                    inRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+                case "others":
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newOthers = doc.data().sum_others_in + val;
+                    transaction.update(docRef, {
+                      sum_others_in: newOthers,
+                    });
+                  });
+                    inRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+
+
+            }
+
+
+            // inRef.set({
+            //     //balance: this.state.,
+            //     total_income: 0,
+            //     total_outcome: 0,
+            //
+            //     sum_salary: 0,
+            //     sum_gift: 0,
+            //     sum_passive: 0,
+            //     sum_others: 0,
+            //
+            //     sum_food: 0,
+            //     sum_cloth: 0,
+            //     sum_sport: 0,
+            //     sum_entertainment: 0,
+            //     sum_transport: 0,
+            //     sum_taxes: 0,
+            //     sum_others: 0,
+            //     }).then(function(){
+            //           console.log(" OK \n");
+            //         });
+
+        }else if(this.state.listOutcome){
+
+            firestore.runTransaction(async transaction => {
+            const doc = await transaction.get(docRef);
+
+            const newBalance = doc.data().balance - val;
+            const newTotalOutcome = doc.data().total_outcome + val;
+            transaction.update(docRef, {
+              balance: newBalance,
+              total_outcome: newTotalOutcome,
+            });
+
+          });
+
+            const outRef = docRef.collection("outcome").doc(Math.random().toString(36).substr(2, 9))
+            const cat = this.state.category
+            console.log(cat);
+            //     sum_food: 0,
+            //     sum_cloth: 0,
+            //     sum_sport: 0,
+            //     sum_entertainment: 0,
+            //     sum_transport: 0,
+            //     sum_taxes: 0,
+            //     sum_others: 0,
+
+
+            switch (cat) {
+                case "food":
+
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newFood = doc.data().sum_food + val;
+                    transaction.update(docRef, {
+                      sum_food: newFood,
+                    });
+                  });
+                    outRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+                case "cloth":
+
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newCloth = doc.data().sum_cloth + val;
+                    transaction.update(docRef, {
+                      sum_cloth: newCloth,
+                    });
+                  });
+                    outRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+                case "sport":
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newSport = doc.data().sum_sport + val;
+                    transaction.update(docRef, {
+                      sum_sport: newSport,
+                    });
+                  });
+                    outRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+                case "entertainment":
+                    firestore.runTransaction(async transaction => {
+                    const doc = await transaction.get(docRef);
+                    const newEnter = doc.data().sum_entertainment + val;
+                    transaction.update(docRef, {
+                      sum_entertainment: newOthers,
+                    });
+                  });
+                    outRef.set({
+                        value: val ,
+                        category: cat,
+                        date: d,
+                        })
+
+                    break;
+
+
+                    case "transport":
+                        firestore.runTransaction(async transaction => {
+                        const doc = await transaction.get(docRef);
+                        const newTransp= doc.data().sum_transport + val;
+                        transaction.update(docRef, {
+                          sum_transport: newTransp,
+                        });
+                      });
+                        outRef.set({
+                            value: val ,
+                            category: cat,
+                            date: d,
+                            })
+
+                        break;
+
+
+                        case "taxes":
+                            firestore.runTransaction(async transaction => {
+                            const doc = await transaction.get(docRef);
+                            const newTax = doc.data().sum_taxes + val;
+                            transaction.update(docRef, {
+                              sum_taxes: newTax,
+                            });
+                          });
+                            outRef.set({
+                                value: val ,
+                                category: cat,
+                                date: d,
+                                })
+
+                            break;
+
+                        case "others":
+                            firestore.runTransaction(async transaction => {
+                            const doc = await transaction.get(docRef);
+                            const newOthers = doc.data().sum_others_out + val;
+
+                                transaction.update(docRef, {
+                                  sum_others_out: newOthers,
+                                });
+                              });
+
+                                outRef.set({
+                                    value: val ,
+                                    category: cat,
+                                    date: d,
+                                    })
+
+                                break;
+
+
+
+            }
+
+        }
+
+
+  }
+
   render(){
 
     return (
@@ -134,9 +448,10 @@ export default class Action extends Component {
   {this.renderOutcomeList()}
 
 
-  <TouchableOpacity style = {styles.submit}>
+  <TouchableOpacity style = {styles.submit} onPress = {this.submitValue}>
      <Text style={styles.btn}>Submit</Text>
   </TouchableOpacity>
+
 
         <View style = {styles.bottomNav}>
             <TouchableOpacity>
