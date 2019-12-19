@@ -36,7 +36,7 @@ export default class Action extends Component {
     this.state={
 
         value: "",
-        listIncome: false,
+        listIncome: true,
         listOutcome: false,
         category:"others",
 
@@ -371,7 +371,7 @@ export default class Action extends Component {
     return (
 
       <View style = {styles.container}>
-      <Text style={styles.dashboardHeader}>Action</Text>
+      <Text style={styles.ActionHeader}>Action</Text>
 
 
       <View style = {styles.container2}>
@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
 
   },
 
-  dashboardHeader:{
+  ActionHeader:{
       fontWeight: "bold",
       color: "#3498DB",
       fontSize: 36,

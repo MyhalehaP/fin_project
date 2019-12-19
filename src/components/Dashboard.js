@@ -35,6 +35,14 @@ export default class Dashboard extends Component {
         taxes: "",
         others: "",
 
+        salary: 0,
+        gift: 0,
+        passive: 0,
+        others_in: 0,
+
+        totalIncome: 0,
+        totalOutcome: 0,
+
     }
 
   }
@@ -61,6 +69,14 @@ export default class Dashboard extends Component {
                             transport: doc.data().sum_transport,
                             taxes: doc.data().sum_taxes,
                             others: doc.data().sum_others_out,
+
+                            salary: doc.data().sum_salary,
+                            gift: doc.data().sum_gift,
+                            passive: doc.data().sum_passive,
+                            others_in: doc.data().sum_others_in,
+
+                            totalIncome: doc.data().total_income,
+                            totalOutcome: doc.data().total_outcome,
                          });
 
                         });
@@ -97,6 +113,19 @@ export default class Dashboard extends Component {
                 <Text style ={styles.textExpenses}>Transport: {this.state.transport}</Text>
                 <Text style ={styles.textExpenses}>Taxes: {this.state.taxes}</Text>
                 <Text style ={styles.textExpenses}>Others: {this.state.others}</Text>
+            </View>
+
+
+            <View style={styles.income}>
+
+
+                <Text style ={styles.textExpenses}>Salary: {this.state.salary}</Text>
+                <Text style ={styles.textExpenses}>Gift: {this.state.gift}</Text>
+                <Text style ={styles.textExpenses}>Passive: {this.state.passive}</Text>
+                <Text style ={styles.textExpenses}>Others: {this.state.others_in}</Text>
+                <Text style ={styles.textExpenses}>Total Income: {this.state.totalIncome}</Text>
+                <Text style ={styles.textExpenses}>Total Outcome: {this.state.totalOutcome}</Text>
+
             </View>
 
     </View>
@@ -173,7 +202,18 @@ const styles = StyleSheet.create({
   },
 
   expenses:{
-      flex:1,
+      flex:3,
+      marginTop:10,
+      backgroundColor:"#3498DB",
+      borderWidth:5,
+      borderColor:"#AED6F1",
+      justifyContent:"center",
+
+
+  },
+
+  income:{
+      flex:3,
       marginTop:10,
       backgroundColor:"#3498DB",
       borderWidth:5,
