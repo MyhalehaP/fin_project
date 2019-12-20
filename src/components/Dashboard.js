@@ -168,17 +168,17 @@ const styles = StyleSheet.create({
 
   },
 
-  dashboardHeader:{
-      fontWeight: 'regular',
-      color: "#000000",
-      fontSize: 14,
-      paddingBottom: 10,
-      textAlign:"center",
-      justifyContent: "center",
+  dashboardHeader: {
+    fontWeight: 'regular',
+    color: '#000000',
+    fontSize: 14,
+    paddingBottom: 10,
+    textAlign: 'center',
+    justifyContent: 'center',
 
   },
 
-  balance:{
+  balance: {
       flex:1,
       backgroundColor:"#3498DB",
       borderWidth:5,
