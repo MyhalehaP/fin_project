@@ -18,72 +18,69 @@ import {
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
-import firebase from './Firebase'
+import firebase from './Firebase';
 import 'firebase/firestore';
 
 export default class Dashboard extends Component {
 
-  constructor(){
-    super()
-    this.state={
-        balance: 'Loading...',
-        food: "",
-        cloth: "",
-        sport: "",
-        entertainment: "",
-        transport: "",
-        taxes: "",
-        others: "",
+  constructor() {
+    super();
+    this.state = {
+      balance: 'Loading...',
+      food: '',
+      cloth: '',
+      sport: '',
+      entertainment: '',
+      transport: '',
+      taxes: '',
+      others: '',
 
-        salary: 0,
-        gift: 0,
-        passive: 0,
-        others_in: 0,
+      salary: 0,
+      gift: 0,
+      passive: 0,
+      others_in: 0,
 
-        totalIncome: 0,
-        totalOutcome: 0,
-
+      totalIncome: 0,
+      totalOutcome: 0,
     }
-
   }
 
-  componentDidMount(){
+  componentDidMount() {
+    const didFocusSubscription = this.props.navigation.addListener(
+      'didFocus',
+      payload => {
+        var firestore = firebase.firestore();
+        var current_user = firebase.auth().currentUser.uid;
 
-      const didFocusSubscription = this.props.navigation.addListener(
-        'didFocus',
-        payload => {
-            var firestore = firebase.firestore();
-            var current_user = firebase.auth().currentUser.uid;
+        const docRef = firestore.collection("users").doc(current_user);
 
-            const docRef = firestore.collection("users").doc(current_user);
+        let getDoc = docRef.get()
+          .then(doc => {
 
-            let getDoc = docRef.get()
-                    .then(doc => {
+            this.setState({
+              balance: doc.data().balance,
+              food: doc.data().sum_food,
+              cloth: doc.data().sum_cloth,
+              sport: doc.data().sum_sport,
+              entertainment: doc.data().sum_entertainment,
+              transport: doc.data().sum_transport,
+              taxes: doc.data().sum_taxes,
+              others: doc.data().sum_others_out,
 
-                        this.setState({
-                            balance : doc.data().balance,
-                            food: doc.data().sum_food,
-                            cloth: doc.data().sum_cloth,
-                            sport: doc.data().sum_sport,
-                            entertainment: doc.data().sum_entertainment,
-                            transport: doc.data().sum_transport,
-                            taxes: doc.data().sum_taxes,
-                            others: doc.data().sum_others_out,
+              salary: doc.data().sum_salary,
+              gift: doc.data().sum_gift,
+              passive: doc.data().sum_passive,
+              others_in: doc.data().sum_others_in,
 
-                            salary: doc.data().sum_salary,
-                            gift: doc.data().sum_gift,
-                            passive: doc.data().sum_passive,
-                            others_in: doc.data().sum_others_in,
+              totalIncome: doc.data().total_income,
+              totalOutcome: doc.data().total_outcome,
+            });
 
-                            totalIncome: doc.data().total_income,
-                            totalOutcome: doc.data().total_outcome,
-                         });
+          });
+      }
+    );
 
-                        });
-        }
-      );
-
-   }
+  }
 
 
 
@@ -158,14 +155,12 @@ export default class Dashboard extends Component {
 
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flex: 1,
-
   },
-  container2:{
+  container2: {
     flex: 0.7,
-    justifyContent:"center",
-
+    justifyContent: 'center',
   },
 
   dashboardHeader: {
@@ -175,52 +170,44 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     textAlign: 'center',
     justifyContent: 'center',
-
   },
 
   balance: {
-      flex:1,
-      backgroundColor:"#3498DB",
-      borderWidth:5,
-      borderColor:"#AED6F1",
-      justifyContent:"center",
-
+    flex: 1,
+    backgroundColor: '#3498DB',
+    borderWidth: 5,
+    borderColor: '#AED6F1',
+    justifyContent: 'center',
   },
 
-  textBalance:{
-      color:"white",
-      fontSize: 36,
-      textAlign:"center",
-
+  textBalance: {
+    color: 'white',
+    fontSize: 36,
+    textAlign: 'center',
   },
 
-  textExpenses:{
-      color:"white",
-      fontSize: 18,
-      textAlign:"center",
-
+  textExpenses: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
   },
 
-  expenses:{
-      flex:3,
-      marginTop:10,
-      backgroundColor:"#3498DB",
-      borderWidth:5,
-      borderColor:"#AED6F1",
-      justifyContent:"center",
-
-
+  expenses: {
+    flex: 3,
+    marginTop: 10,
+    backgroundColor: '#3498DB',
+    borderWidth: 5,
+    borderColor: '#AED6F1',
+    justifyContent: 'center',
   },
 
-  income:{
-      flex:3,
-      marginTop:10,
-      backgroundColor:"#3498DB",
-      borderWidth:5,
-      borderColor:"#AED6F1",
-      justifyContent:"center",
-
-
+  income: {
+    flex: 3,
+    marginTop: 10,
+    backgroundColor: '#3498DB',
+    borderWidth: 5,
+    borderColor: '#AED6F1',
+    justifyContent: 'center',
   },
 
   btn:{
