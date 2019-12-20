@@ -16,6 +16,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import { PieChart } from "react-native-chart-kit";
+
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import firebase from './Firebase';
@@ -94,8 +96,6 @@ export default class Dashboard extends Component {
           <View style={styles.balance}>
             <Text style={styles.textBalance}>{this.state.balance}</Text>
           </View>
-
-
           <View style={styles.expenses}>
             <Text style={styles.textExpenses}>Food: {this.state.food}</Text>
             <Text style={styles.textExpenses}>Cloth: {this.state.cloth}</Text>
@@ -106,19 +106,14 @@ export default class Dashboard extends Component {
             <Text style={styles.textExpenses}>Others: {this.state.others}</Text>
           </View>
 
-
           <View style={styles.income}>
-
-
             <Text style={styles.textExpenses}>Salary: {this.state.salary}</Text>
             <Text style={styles.textExpenses}>Gift: {this.state.gift}</Text>
             <Text style={styles.textExpenses}>Passive: {this.state.passive}</Text>
             <Text style={styles.textExpenses}>Others: {this.state.others_in}</Text>
             <Text style={styles.textExpenses}>Total Income: {this.state.totalIncome}</Text>
             <Text style={styles.textExpenses}>Total Outcome: {this.state.totalOutcome}</Text>
-
           </View>
-
         </View>
 
         <View style={styles.bottomNav}>
@@ -197,26 +192,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  btn:{
-    width:100,
+  btn: {
+    width: 100,
     height: 50,
-    color: "white",
-    textAlign:"center",
-    textAlignVertical: "center",
+    color: 'white',
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 
-  bottomNav:{
-      flex:1,
-      backgroundColor:"#3498DB",
-      flexDirection: "row",
-      alignContent: 'space-around',
-      justifyContent:"center",
-      alignSelf:"center",
-      position: "absolute",
-      bottom: 0,
-
-
-
+  bottomNav: {
+    flex: 1,
+    backgroundColor: '#3498DB',
+    flexDirection: 'row',
+    alignContent: 'space-around',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 0,
   }
 
 });
