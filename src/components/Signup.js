@@ -26,7 +26,7 @@ export default class Signup extends Component {
   constructor(){
     super()
     this.state={
-        username: "",
+        username: "",z
         password: "",
     }
 

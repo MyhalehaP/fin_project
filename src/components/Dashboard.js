@@ -1,4 +1,4 @@
-/**
+z/**
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
@@ -169,9 +169,9 @@ const styles = StyleSheet.create({
   },
 
   dashboardHeader:{
-      fontWeight: "bold",
-      color: "#3498DB",
-      fontSize: 36,
+      fontWeight: 'regular',
+      color: "#000000",
+      fontSize: 14,
       paddingBottom: 10,
       textAlign:"center",
       justifyContent: "center",
