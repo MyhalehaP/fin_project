@@ -1,4 +1,4 @@
-z/**
+/**
  * Sample React Native App
  * https://github.com/facebook/react-native
  *
@@ -79,75 +79,62 @@ export default class Dashboard extends Component {
           });
       }
     );
-
   }
 
 
+  componentWillUnmount() {
+    this.didFocusSubscription.remove();
+  }
 
-   componentWillUnmount() {
-   didFocusSubscription.remove();
-}
-
-  render(){
-
+  render() {
     return (
-
-      <View style = {styles.container}>
-      <Text style={styles.dashboardHeader}>Dashboard</Text>
-
-
-      <View style = {styles.container2}>
-            <View style={styles.balance}>
-                <Text style ={styles.textBalance}>{this.state.balance}</Text>
-            </View>
-
-
-            <View style={styles.expenses}>
-                <Text style ={styles.textExpenses}>Food: {this.state.food}</Text>
-                <Text style ={styles.textExpenses}>Cloth: {this.state.cloth}</Text>
-                <Text style ={styles.textExpenses}>Sport: {this.state.sport}</Text>
-                <Text style ={styles.textExpenses}>Entertainment: {this.state.entertainment}</Text>
-                <Text style ={styles.textExpenses}>Transport: {this.state.transport}</Text>
-                <Text style ={styles.textExpenses}>Taxes: {this.state.taxes}</Text>
-                <Text style ={styles.textExpenses}>Others: {this.state.others}</Text>
-            </View>
-
-
-            <View style={styles.income}>
-
-
-                <Text style ={styles.textExpenses}>Salary: {this.state.salary}</Text>
-                <Text style ={styles.textExpenses}>Gift: {this.state.gift}</Text>
-                <Text style ={styles.textExpenses}>Passive: {this.state.passive}</Text>
-                <Text style ={styles.textExpenses}>Others: {this.state.others_in}</Text>
-                <Text style ={styles.textExpenses}>Total Income: {this.state.totalIncome}</Text>
-                <Text style ={styles.textExpenses}>Total Outcome: {this.state.totalOutcome}</Text>
-
-            </View>
-
-    </View>
-
-        <View style = {styles.bottomNav}>
-            <TouchableOpacity  onPress = {() => this.props.navigation.navigate('Action')}>
-               <Text style={styles.btn}>Action</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity>
-               <Text style={styles.btn}>Dashboard</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity  onPress = {() => this.props.navigation.navigate('History')}>
-               <Text style={styles.btn}>History</Text>
-            </TouchableOpacity>
-
-
-        </View>
-
+      <View style={styles.container}>
+        <Text style={styles.dashboardHeader}>Dashboard</Text>
+        <View style={styles.container2}>
+          <View style={styles.balance}>
+            <Text style={styles.textBalance}>{this.state.balance}</Text>
           </View>
 
 
+          <View style={styles.expenses}>
+            <Text style={styles.textExpenses}>Food: {this.state.food}</Text>
+            <Text style={styles.textExpenses}>Cloth: {this.state.cloth}</Text>
+            <Text style={styles.textExpenses}>Sport: {this.state.sport}</Text>
+            <Text style={styles.textExpenses}>Entertainment: {this.state.entertainment}</Text>
+            <Text style={styles.textExpenses}>Transport: {this.state.transport}</Text>
+            <Text style={styles.textExpenses}>Taxes: {this.state.taxes}</Text>
+            <Text style={styles.textExpenses}>Others: {this.state.others}</Text>
+          </View>
 
 
+          <View style={styles.income}>
+
+
+            <Text style={styles.textExpenses}>Salary: {this.state.salary}</Text>
+            <Text style={styles.textExpenses}>Gift: {this.state.gift}</Text>
+            <Text style={styles.textExpenses}>Passive: {this.state.passive}</Text>
+            <Text style={styles.textExpenses}>Others: {this.state.others_in}</Text>
+            <Text style={styles.textExpenses}>Total Income: {this.state.totalIncome}</Text>
+            <Text style={styles.textExpenses}>Total Outcome: {this.state.totalOutcome}</Text>
+
+          </View>
+
+        </View>
+
+        <View style={styles.bottomNav}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Action')}>
+            <Text style={styles.btn}>Action</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity>
+            <Text style={styles.btn}>Dashboard</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('History')}>
+            <Text style={styles.btn}>History</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   }
 };
