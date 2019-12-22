@@ -16,7 +16,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { PieChart } from "react-native-chart-kit";
+// import { PieChart } from "react-native-chart-kit";
 
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -89,12 +89,22 @@ export default class Dashboard extends Component {
   }
 
   render() {
+    const balance = this.state.balance;
+    const months = ['January', 'February','March','April','May','June','July','August','September','October','November','December'];
+    let now = new Date();
+    let thisMonth = months[now.getMonth()];
+    let thisDay = now.getDate();
+
     return (
       <View style={styles.container}>
         <Text style={styles.dashboardHeader}>Dashboard</Text>
         <View style={styles.container2}>
           <View style={styles.balance}>
-            <Text style={styles.textBalance}>{this.state.balance}</Text>
+            <Text style={styles.textBalanceTitle}>Balance</Text>
+            <Text style={styles.textBalanceDate}>Today, {thisDay} {thisMonth}</Text>
+            <Text style={styles.textBalance}>
+              <Text style={styles.textBalanceCurrency}>$</Text>{balance}
+            </Text>
           </View>
           <View style={styles.expenses}>
             <Text style={styles.textExpenses}>Food: {this.state.food}</Text>
@@ -104,6 +114,10 @@ export default class Dashboard extends Component {
             <Text style={styles.textExpenses}>Transport: {this.state.transport}</Text>
             <Text style={styles.textExpenses}>Taxes: {this.state.taxes}</Text>
             <Text style={styles.textExpenses}>Others: {this.state.others}</Text>
+          </View>
+
+          <View>
+            <Text style={styles.container}>Expenses</Text>
           </View>
 
           <View style={styles.income}>
@@ -139,6 +153,8 @@ export default class Dashboard extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 10,
+    backgroundColor: '#E9EBEA',
   },
   container2: {
     flex: 0.7,
@@ -146,26 +162,54 @@ const styles = StyleSheet.create({
   },
 
   dashboardHeader: {
-    fontWeight: 'regular',
     color: '#000000',
     fontSize: 14,
-    paddingBottom: 10,
+    fontFamily: 'Copse',
+    paddingTop: 30,
     textAlign: 'center',
     justifyContent: 'center',
   },
 
   balance: {
-    flex: 1,
-    backgroundColor: '#3498DB',
-    borderWidth: 5,
-    borderColor: '#AED6F1',
+    flex: 4,
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    textAlign: 'left',
+    borderRadius: 15,
+    margin: 15,
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 10},
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 6,
   },
 
   textBalance: {
-    color: 'white',
-    fontSize: 36,
+    color: 'black',
+    alignSelf: 'flex-start',
+    fontSize: 72,
     textAlign: 'center',
+  },
+
+  textBalanceCurrency: {
+    color: '#929292',
+    fontSize: 24,
+    fontWeight: '600',
+  },
+
+  textBalanceTitle: {
+    color: 'black',
+    fontFamily: 'Cabin',
+    fontWeight: '600',
+    paddingTop: 15,
+    fontSize: 24,
+  },
+
+  textBalanceDate: {
+    color: '#929292',
+    fontFamily: 'Cabin',
+    fontSize: 12,
   },
 
   textExpenses: {
@@ -175,12 +219,16 @@ const styles = StyleSheet.create({
   },
 
   expenses: {
-    flex: 3,
-    marginTop: 10,
-    backgroundColor: '#3498DB',
-    borderWidth: 5,
-    borderColor: '#AED6F1',
+    flex: 4,
+    backgroundColor: '#FFFFFF',
+    padding: 15,
+    borderRadius: 15,
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 10},
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 6,
   },
 
   income: {
@@ -190,6 +238,11 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderColor: '#AED6F1',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 10},
+    shadowOpacity: 0.8,
+    shadowRadius: 15,
+    elevation: 6,
   },
 
   btn: {

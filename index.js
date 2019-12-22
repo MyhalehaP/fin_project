@@ -12,4 +12,4 @@
 
 
 
- AppRegistry.registerComponent(appName, () => Login);
+ AppRegistry.registerComponent("fin_project", () => Login);

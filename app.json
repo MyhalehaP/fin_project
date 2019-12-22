@@ -1,4 +1,9 @@
 {
+  "expo": {
   "name": "fin_project",
-  "displayName": "fin_project"
+    "slug": "fin_project",
+    "sdkVersion": "34.0.0",
+    "appKey": "fin_project",
+    "privacy": "public"
+}
 }
