@@ -18,32 +18,30 @@ import {
   Image,
 } from 'react-native';
 
-import {Dimensions} from "react-native";
+import {Dimensions} from 'react-native';
 
 console.disableYellowBox = true;
 
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import firebase from './Firebase'
+import firebase from './Firebase';
 import 'firebase/firestore';
 
 export default class Action extends Component {
-
   constructor() {
-    super()
+    super();
     this.state = {
-
-      value: "",
+      value: '',
       listIncome: true,
       listOutcome: false,
-      category: "others",
-    }
+      category: 'others',
+    };
   }
 
   getValue(text) {
     this.setState({
-      value: text
-    })
+      value: text,
+    });
     //console.log(text);
   }
 
@@ -51,42 +49,42 @@ export default class Action extends Component {
     if (this.state.listIncome) {
       return (
         <View style={styles.listIn}>
-          <Picker selectedValue={this.state.category} style={styles.dropList}
-                  onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
-
-            <Picker.Item label="Salary" value="salary"/>
-            <Picker.Item label="Gift" value="gift"/>
-            <Picker.Item label="Passive" value="passive"/>
-            <Picker.Item label="Others" value="others"/>
-
+          <Picker
+            selectedValue={this.state.category}
+            style={styles.dropList}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({category: itemValue})
+            }>
+            <Picker.Item label="Salary" value="salary" />
+            <Picker.Item label="Gift" value="gift" />
+            <Picker.Item label="Passive" value="passive" />
+            <Picker.Item label="Others" value="others" />
           </Picker>
         </View>
-      )
-
-
+      );
     }
   }
 
   renderOutcomeList() {
     if (this.state.listOutcome) {
-
       return (
-
         <View style={styles.listIn}>
-          <Picker selectedValue={this.state.category} style={styles.dropList}
-                  onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
-
-            <Picker.Item label="Food" value="food"/>
-            <Picker.Item label="Cloth" value="cloth"/>
-            <Picker.Item label="Sport" value="sport"/>
-            <Picker.Item label="Entertainment" value="entertainment"/>
-            <Picker.Item label="Transport" value="transport"/>
-            <Picker.Item label="Taxes" value="taxes"/>
-            <Picker.Item label="Others" value="others"/>
-
+          <Picker
+            selectedValue={this.state.category}
+            style={styles.dropList}
+            onValueChange={(itemValue, itemIndex) =>
+              this.setState({category: itemValue})
+            }>
+            <Picker.Item label="Food" value="food" />
+            <Picker.Item label="Cloth" value="cloth" />
+            <Picker.Item label="Sport" value="sport" />
+            <Picker.Item label="Entertainment" value="entertainment" />
+            <Picker.Item label="Transport" value="transport" />
+            <Picker.Item label="Taxes" value="taxes" />
+            <Picker.Item label="Others" value="others" />
           </Picker>
         </View>
-      )
+      );
     }
   }
 
@@ -94,29 +92,26 @@ export default class Action extends Component {
     this.setState({
       listIncome: true,
       listOutcome: false,
-    })
-  }
+    });
+  };
 
   outcomePress = () => {
     this.setState({
       listIncome: false,
       listOutcome: true,
-    })
-  }
-
+    });
+  };
 
   submitValue = () => {
-
     var firestore = firebase.firestore();
     var current_user = firebase.auth().currentUser.uid;
-    const docRef = firestore.collection("users").doc(current_user);
+    const docRef = firestore.collection('users').doc(current_user);
 
-    var d = new Date()
-    var time = Number(d.getTime())
-    var val = Number(this.state.value)
+    var d = new Date();
+    var time = Number(d.getTime());
+    var val = Number(this.state.value);
 
     if (this.state.listIncome) {
-
       firestore.runTransaction(async transaction => {
         const doc = await transaction.get(docRef);
 
@@ -126,17 +121,18 @@ export default class Action extends Component {
           balance: newBalance,
           total_income: newTotalIncome,
         });
-
       });
 
-      const inRef = docRef.collection("income").doc(Math.random().toString(36).substr(2, 9))
-      const cat = this.state.category
+      const inRef = docRef.collection('income').doc(
+        Math.random()
+          .toString(36)
+          .substr(2, 9),
+      );
+      const cat = this.state.category;
       console.log(cat);
 
-
       switch (cat) {
-        case "salary":
-
+        case 'salary':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newSalary = doc.data().sum_salary + val;
@@ -148,12 +144,11 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
 
           break;
 
-        case "gift":
-
+        case 'gift':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newGift = doc.data().sum_gift + val;
@@ -165,11 +160,11 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
 
           break;
 
-        case "passive":
+        case 'passive':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newPassive = doc.data().sum_passive + val;
@@ -181,11 +176,11 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
 
           break;
 
-        case "others":
+        case 'others':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newOthers = doc.data().sum_others_in + val;
@@ -197,12 +192,10 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
       }
-
     } else if (this.state.listOutcome) {
-
       firestore.runTransaction(async transaction => {
         const doc = await transaction.get(docRef);
 
@@ -212,14 +205,17 @@ export default class Action extends Component {
           balance: newBalance,
           total_outcome: newTotalOutcome,
         });
-
       });
 
-      const outRef = docRef.collection("outcome").doc(Math.random().toString(36).substr(2, 9))
-      const cat = this.state.category
+      const outRef = docRef.collection('outcome').doc(
+        Math.random()
+          .toString(36)
+          .substr(2, 9),
+      );
+      const cat = this.state.category;
       console.log(cat);
       switch (cat) {
-        case "food":
+        case 'food':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newFood = doc.data().sum_food + val;
@@ -231,9 +227,9 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
-        case "cloth":
+        case 'cloth':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newCloth = doc.data().sum_cloth + val;
@@ -245,9 +241,9 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
-        case "sport":
+        case 'sport':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newSport = doc.data().sum_sport + val;
@@ -259,9 +255,9 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
-        case "entertainment":
+        case 'entertainment':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newEnter = doc.data().sum_entertainment + val;
@@ -273,9 +269,9 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
-        case "transport":
+        case 'transport':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newTransp = doc.data().sum_transport + val;
@@ -287,9 +283,9 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
-        case "taxes":
+        case 'taxes':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newTax = doc.data().sum_taxes + val;
@@ -301,9 +297,9 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
-        case "others":
+        case 'others':
           firestore.runTransaction(async transaction => {
             const doc = await transaction.get(docRef);
             const newOthers = doc.data().sum_others_out + val;
@@ -317,34 +313,33 @@ export default class Action extends Component {
             value: val,
             category: cat,
             date: d,
-          })
+          });
           break;
       }
     }
-  }
+  };
 
   render() {
-
     return (
-
       <View style={styles.container}>
         <Text style={styles.ActionHeader}>Action</Text>
-
 
         <View style={styles.container2}>
           <TouchableOpacity onPress={this.incomePress}>
             <Text style={styles.btnIncome}>Income</Text>
           </TouchableOpacity>
 
-
           <TouchableOpacity onPress={this.outcomePress}>
             <Text style={styles.btnOutcome}>Outcome</Text>
           </TouchableOpacity>
-
         </View>
 
-        <TextInput style={styles.valueInput} onChangeText={text => this.getValue(text)} underlineColorAndroid={'black'}
-                   width={150}/>
+        <TextInput
+          style={styles.valueInput}
+          onChangeText={text => this.getValue(text)}
+          underlineColorAndroid={'black'}
+          width={150}
+        />
         {this.renderIncomeList()}
         {this.renderOutcomeList()}
 
@@ -353,7 +348,8 @@ export default class Action extends Component {
         </TouchableOpacity>
 
         <View style={styles.bottomNav}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Dashboard')}>
             <Text style={styles.btn}>
               {/*{walletIcon}*/}
               <Image
@@ -364,7 +360,8 @@ export default class Action extends Component {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Action')}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Action')}>
             <Text style={styles.btn}>
               <Image
                 source={require('../assets/icons/png/addButton.png')}
@@ -374,7 +371,8 @@ export default class Action extends Component {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('History')}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('History')}>
             <Text style={styles.btn}>
               <Image
                 source={require('../assets/icons/png/history.png')}
@@ -387,7 +385,7 @@ export default class Action extends Component {
       </View>
     );
   }
-};
+}
 
 const screenHeight = Math.round(Dimensions.get('window').height); // статична ширина та висота екрану смартфона
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -396,14 +394,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#E9EBEA',
-
   },
   container2: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     alignContent: 'space-around',
-    justifyContent: "center",
-    alignSelf: "center",
+    justifyContent: 'center',
+    alignSelf: 'center',
     position: 'absolute',
     top: 150,
     marginBottom: 50,
@@ -411,50 +408,46 @@ const styles = StyleSheet.create({
   },
 
   submit: {
-    backgroundColor: "#EC9B3B",
+    backgroundColor: '#EC9B3B',
     flex: 0,
     borderRadius: 15,
-    alignItems: "center",
-    alignSelf: "center",
-    position: "absolute",
+    alignItems: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
     top: screenHeight - 150,
   },
-
 
   dropList: {
     height: 25,
     width: 200,
-    alignSelf: "center",
+    alignSelf: 'center',
     top: 320,
   },
 
   btnIncome: {
-    color: "white",
+    color: 'white',
     backgroundColor: '#EC9B3B',
     fontSize: 24,
     padding: 10,
     width: 150,
-    textAlign: "center",
-
+    textAlign: 'center',
   },
 
   btnOutcome: {
-    color: "white",
+    color: 'white',
     backgroundColor: '#293462',
     fontSize: 24,
     padding: 10,
     width: 150,
-    textAlign: "center",
+    textAlign: 'center',
   },
 
   valueInput: {
-
     flex: 0.35,
-    textAlign: "center",
-    alignSelf: "center",
-    position: "absolute",
+    textAlign: 'center',
+    alignSelf: 'center',
+    position: 'absolute',
     top: 250,
-
   },
 
   ActionHeader: {
@@ -466,7 +459,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
   },
-
 
   btn: {
     flex: 1,
@@ -492,6 +484,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     bottom: 0,
-  }
-
+  },
 });
